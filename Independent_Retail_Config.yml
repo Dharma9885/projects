@@ -1,0 +1,139 @@
+version: 2
+
+sources:
+ 
+  - name: FACTS
+    schema: FACTS
+    database: "{% if target.database == 'DEV_MARTS' -%} DEV_EDW{% elif target.database == 'TEST_MARTS' -%} TEST_EDW{% elif target.database == 'PROD_MARTS' -%} PROD_EDW{% elif target.database == 'UAT_MARTS' -%} PROD_EDW{% else -%} INVALID_DATABASE{% endif -%}"
+    tables:
+      - name: FACT_SALES_WARRANTY_REGISTRATION
+        identifier: FACT_SALES_WARRANTY_REGISTRATION
+
+
+  - name: CONSOLIDATED
+    schema: CONSOLIDATED
+    database: "{% if target.database == 'DEV_MARTS' -%} DEV_EDW{% elif target.database == 'TEST_MARTS' -%} TEST_EDW{% elif target.database == 'PROD_MARTS' -%} PROD_EDW{% elif target.database == 'UAT_MARTS' -%} PROD_EDW{% else -%} INVALID_DATABASE{% endif -%}"
+    tables:
+
+      - name: EDW_PRODUCT
+        identifier: VW_EDW_PRODUCT  
+
+
+        
+  - name: CONSOLIDATED_PROD
+    schema: CONSOLIDATED
+    database: "{% if target.database == 'DEV_MARTS' -%} DEV_EDW{% elif target.database == 'TEST_MARTS' -%} PROD_EDW{% elif target.database == 'PROD_MARTS' -%} PROD_EDW{% elif target.database == 'UAT_MARTS' -%} PROD_EDW{% else -%} INVALID_DATABASE{% endif -%}"
+    tables:
+      - name: VW_EDW_SERIAL_NUMBER_SHIPMENT_DETAILS
+        identifier: VW_EDW_SERIAL_NUMBER_SHIPMENT_DETAILS
+      - name: VW_EDW_PRODUCT_HIERARCHY 
+        identifier: VW_EDW_PRODUCT_HIERARCHY 
+      - name: VW_EDW_IR_PRODUCT_HIERARCHY
+        identifier: VW_EDW_IR_PRODUCT_HIERARCHY 
+      - name: EDW_PRODUCT_HIERARCHY_VW
+        identifier: VW_EDW_PRODUCT_HIERARCHY   
+      - name: VW_EDW_LOCATION
+        identifier: VW_EDW_LOCATION 
+      - name: VW_EDW_PRODUCT_LOOKUP
+        identifier: VW_EDW_PRODUCT_LOOKUP 
+      - name: VW_EDW_PRODUCT_COST 
+        identifier: VW_EDW_PRODUCT_COST 
+
+
+  - name: JDA
+    schema: JDA
+    database: "{% if target.database == 'DEV_MARTS' -%} PROD_RAW{% elif target.database == 'TEST_MARTS' -%} PROD_RAW{% elif target.database == 'PROD_MARTS' -%} PROD_RAW{% elif target.database == 'UAT_MARTS' -%} UAT_RAW{% else -%} INVALID_DATABASE{% endif -%}"
+    tables:
+      - name: vw_planning_calendar
+        identifier: vw_planning_calendar
+
+  - name: DEMAND
+    schema: DEMAND
+    database: "{% if target.database == 'DEV_MARTS' -%} DEV_MARTS{% elif target.database == 'TEST_MARTS' -%} PROD_MARTS{% elif target.database == 'PROD_MARTS' -%} PROD_MARTS{% elif target.database == 'UAT_MARTS' -%}PROD_MARTS {% elif target.database == 'TEST_EDW' -%} PROD_EDW{% elif target.database == 'PROD_EDW' -%} PROD_EDW{% else -%} INVALID_DATABASE{% endif -%}"
+    tables:
+      - name: BRZ_GLOBAL_FORECAST_SNAPSHOT
+        identifier: BRZ_GLOBAL_FORECAST_SNAPSHOT
+
+  - name: PRODUCT
+    schema: PRODUCT
+    database: "{% if target.database == 'DEV_MARTS' -%} DEV_MARTS{% elif target.database == 'TEST_MARTS' -%} TEST_MARTS{% elif target.database == 'PROD_MARTS' -%} PROD_MARTS{% elif target.database == 'UAT_MARTS' -%}PROD_MARTS {% elif target.database == 'TEST_EDW' -%} PROD_EDW{% elif target.database == 'PROD_EDW' -%} PROD_EDW{% else -%} INVALID_DATABASE{% endif -%}"
+    tables:
+      - name: VW_BRZ_PRODUCT_SERIAL_NUMBER_PKMS_SHIPMENT_DETAILS
+        identifier: VW_BRZ_PRODUCT_SERIAL_NUMBER_PKMS_SHIPMENT_DETAILS
+
+  - name: INVENTORY
+    schema: INVENTORY
+    database: "{% if target.database == 'DEV_MARTS' -%} DEV_MARTS{% elif target.database == 'TEST_MARTS' -%} PROD_MARTS{% elif target.database == 'PROD_MARTS' -%} PROD_MARTS{% elif target.database == 'UAT_MARTS' -%}PROD_MARTS {% elif target.database == 'TEST_EDW' -%} PROD_EDW{% elif target.database == 'PROD_EDW' -%} PROD_EDW{% else -%} INVALID_DATABASE{% endif -%}"
+    tables: 
+      - name: BRZ_INVENTORY_ONHAND_AMERICAS 
+        identifier: BRZ_INVENTORY_ONHAND_AMERICAS
+      - name: VW_BRZ_INVENTORY_ONHAND 
+        identifier: VW_BRZ_INVENTORY_ONHAND
+
+  - name: SUPPLY
+    schema: SUPPLY
+    database: "{% if target.database == 'DEV_MARTS' -%} DEV_MARTS{% elif target.database == 'TEST_MARTS' -%} PROD_MARTS{% elif target.database == 'PROD_MARTS' -%} PROD_MARTS{% elif target.database == 'UAT_MARTS' -%}PROD_MARTS {% elif target.database == 'TEST_EDW' -%} PROD_EDW{% elif target.database == 'PROD_EDW' -%} PROD_EDW{% else -%} INVALID_DATABASE{% endif -%}"
+    tables:
+      - name: BRZ_PRODUCTION_VOLUME
+        identifier: BRZ_PRODUCTION_VOLUME
+      - name: BRZ_GLOBAL_PRODUCTION_PLAN_SCHEDULE
+        identifier: BRZ_GLOBAL_PRODUCTION_PLAN_SCHEDULE
+
+
+  - name: DIMENSIONS
+    schema: DIMENSIONS
+    database: "{% if target.database == 'DEV_MARTS' -%} PROD_EDW{% elif target.database == 'TEST_MARTS' -%} TEST_EDW{% elif target.database == 'PROD_MARTS' -%} PROD_EDW{% elif target.database == 'UAT_MARTS' -%}PROD_EDW {% elif target.database == 'TEST_EDW' -%} PROD_EDW{% elif target.database == 'PROD_EDW' -%} PROD_EDW{% else -%} INVALID_DATABASE{% endif -%}"
+    tables:
+      # - name: DIM_PRODUCT
+      #   identifier: DIM_PRODUCT 
+      - name: DIM_CUSTOMER_TEST
+        identifier: DIM_CUSTOMER
+  #     # - name: DIM_FISCAL_CALENDAR
+  #     #   identifier: DIM_FISCAL_CALENDAR  
+  #     - name: DIM_PRODUCT_LOCATION
+  #       identifier: DIM_PRODUCT_LOCATION
+  #     - name: DIM_PRODUCT_LOCATION_LOV
+  #       identifier: DIM_PRODUCT_LOCATION_LOV
+
+  - name: SALES_BRZ
+    schema: SALES
+    database: "{% if target.database == 'DEV_MARTS' -%} DEV_MARTS{% elif target.database == 'TEST_MARTS' -%} TEST_MARTS{% elif target.database == 'PROD_MARTS' -%} PROD_MARTS{% elif target.database == 'UAT_MARTS' -%}PROD_MARTS {% elif target.database == 'TEST_EDW' -%} PROD_EDW{% elif target.database == 'PROD_EDW' -%} PROD_EDW{% else -%} INVALID_DATABASE{% endif -%}"
+    tables:
+      - name: BRZ_SALES_BILLING_INDEPENDENT_RETAIL
+        identifier: BRZ_SALES_BILLING_INDEPENDENT_RETAIL      
+      - name: BRZ_SALES_FLOORPLAN_INDEPENDENT_RETAIL 
+        identifier: BRZ_SALES_FLOORPLAN_INDEPENDENT_RETAIL
+      - name: BRZ_SALES_FORECAST_INDEPENDENT_RETAIL
+        identifier: BRZ_SALES_FORECAST_INDEPENDENT_RETAIL      
+      - name: BRZ_SALES_ORDER_INDEPENDENT_RETAIL
+        identifier: BRZ_SALES_ORDER_INDEPENDENT_RETAIL
+      - name: BRZ_SALES_INVENTORY_INDEPENDENT_RETAIL
+        identifier: BRZ_SALES_INVENTORY_INDEPENDENT_RETAIL      
+      - name: BRZ_SALES_PRODUCTION_ACTUAL_INDEPENDENT_RETAIL 
+        identifier: BRZ_SALES_PRODUCTION_ACTUAL_INDEPENDENT_RETAIL
+      - name: BRZ_SALES_PRODUCTION_PLAN_INDEPENDENT_RETAIL
+        identifier: BRZ_SALES_PRODUCTION_PLAN_INDEPENDENT_RETAIL      
+      - name: BRZ_SALES_REGISTRATIONS_INDEPENDENT_RETAIL 
+        identifier: BRZ_SALES_REGISTRATIONS_INDEPENDENT_RETAIL
+      - name: BRZ_SALES_SETTLEMENT_INDEPENDENT_RETAIL
+        identifier: BRZ_SALES_SETTLEMENT_INDEPENDENT_RETAIL      
+      - name: BRZ_SALES_SHIPMENT_INDEPENDENT_RETAIL
+        identifier: BRZ_SALES_SHIPMENT_INDEPENDENT_RETAIL
+
+
+
+  - name: SALES_SOURCE
+    schema: SALES
+    database: "{% if target.database == 'DEV_MARTS' -%} DEV_MARTS{% elif target.database == 'TEST_MARTS' -%} PROD_MARTS{% elif target.database == 'PROD_MARTS' -%} PROD_MARTS{% elif target.database == 'UAT_MARTS' -%}PROD_MARTS {% elif target.database == 'TEST_EDW' -%} PROD_EDW{% elif target.database == 'PROD_EDW' -%} PROD_EDW{% else -%} INVALID_DATABASE{% endif -%}"
+    tables:
+      - name: VW_BRZ_DEALER_SETTLEMENTS 
+        identifier: VW_BRZ_DEALER_SETTLEMENTS  
+      - name: BRZ_SALES_ORDERS_AMERICAS2_OUTDOOR 
+        identifier: BRZ_SALES_ORDERS_AMERICAS2_OUTDOOR
+      - name: BRZ_SALES_BILLING_AMERICAS2_OUTDOOR 
+        identifier: BRZ_SALES_BILLING_AMERICAS2_OUTDOOR
+
+
+
+
+  
